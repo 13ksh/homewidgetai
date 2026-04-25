@@ -23,7 +23,7 @@
 * [Groq Cloud Console](https://console.groq.com/keys)에서 키를 발급받으세요.
 
 ### 2. 설치 방법
-1. 최신 `.apk` 파일을 다운로드합니다.
+1. [최신 파일](https://github.com/13ksh/homewidgetai/raw/main/homewidgetai.apk)을 다운로드합니다.
 2. 안드로이드 기기에 설치합니다. (출처를 알 수 없는 앱 설치 권한 허용 필요)
 3. 앱을 실행하고 발급받은 API 키를 저장합니다.
 4. 홈 화면을 길게 눌러 **위젯** 목록에서 `Quick Groq`을 추가하세요.
