@@ -1,6 +1,8 @@
 # 🚀 home widget ai
 **Groq API**를 활용하여 안드로이드 홈 화면에서 즉시 대화할 수 있는 초고속 AI 위젯 클라이언트입니다.
 
+[설치 링크](https://github.com/13ksh/homewidgetai/raw/main/homewidgetai.apk)
+
 ---
 
 ## ✨ 주요 기능
