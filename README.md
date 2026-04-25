@@ -13,6 +13,10 @@
 
 ---
 
+![testimg](testimg.png)
+
+---
+
 ## ⚙️ 시작하기
 
 ### 1. Groq API 키 발급
