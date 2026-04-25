@@ -1,6 +1,8 @@
 # 🚀 home widget ai
 **Groq API**를 활용하여 안드로이드 홈 화면에서 즉시 대화할 수 있는 초고속 AI 위젯 클라이언트입니다.
 
+[설치 링크](https://github.com/13ksh/homewidgetai/raw/main/homewidgetai.apk)
+
 ---
 
 ## ✨ 주요 기능
@@ -23,7 +25,7 @@
 * [Groq Cloud Console](https://console.groq.com/keys)에서 키를 발급받으세요.
 
 ### 2. 설치 방법
-1. 최신 `.apk` 파일을 다운로드합니다.
+1. [최신 파일](https://github.com/13ksh/homewidgetai/raw/main/homewidgetai.apk)을 다운로드합니다.
 2. 안드로이드 기기에 설치합니다. (출처를 알 수 없는 앱 설치 권한 허용 필요)
 3. 앱을 실행하고 발급받은 API 키를 저장합니다.
 4. 홈 화면을 길게 눌러 **위젯** 목록에서 `Quick Groq`을 추가하세요.
@@ -39,11 +41,3 @@
 ## 💬 커뮤니티
 개발자에게 궁금한 점이 있거나 피드백을 주시려면 아래 채널로 오세요!
 * **Discord:** [join 13ksh discord sv](https://discord.gg/Hv8fqDrWKF)
-
----
-
-### 💡 팁:
-* **이미지 넣기:** 깃허브 저장소에 `images` 폴더를 만들고 스크린샷을 올린 뒤, 그 경로를 리드미에 적어주면 훨씬 전문적으로 보입니다.
-* **Badge 추가:** 위쪽에 `![Android](https://img.shields.io/badge/Platform-Android-brightgreen)` 같은 배지를 달아주면 더 멋져요.
-
-작성하시다가 특정 부분에 더 자세한 설명이 필요하면 말씀해 주세요! 특히 **보안** 관련해서 "내 서버로 키를 안 보낸다"는 점을 강조하는 게 신뢰도를 높이는 핵심입니다.
