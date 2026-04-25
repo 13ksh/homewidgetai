@@ -65,10 +65,13 @@ class GroqWidget : AppWidgetProvider() {
         var buffer = prefs.getString("buffer", "") ?: ""
         var isKorean = prefs.getBoolean("is_korean", false)
         var isShift = prefs.getBoolean("is_shift", false)
+        var isCaps = prefs.getBoolean("is_caps", false)
 
         when (key) {
             "DEL" -> if (buffer.isNotEmpty()) buffer = buffer.dropLast(1)
             "SPACE" -> buffer += " "
+            "TAB" -> buffer += "    "
+            "ENTER" -> buffer += "\n"
             "LANG" -> {
                 isKorean = !isKorean
                 prefs.edit().putBoolean("is_korean", isKorean).apply()
@@ -76,6 +79,10 @@ class GroqWidget : AppWidgetProvider() {
             "SHIFT" -> {
                 isShift = !isShift
                 prefs.edit().putBoolean("is_shift", isShift).apply()
+            }
+            "CAPS" -> {
+                isCaps = !isCaps
+                prefs.edit().putBoolean("is_caps", isCaps).apply()
             }
             "RESET" -> {
                 prefs.edit().putString("buffer", "").putString("history", "").putString("context_history", "[]").apply()
@@ -91,7 +98,8 @@ class GroqWidget : AppWidgetProvider() {
                 }
             }
             else -> {
-                val charStr = if (isShift) {
+                val shiftActive = isShift || isCaps
+                val charStr = if (shiftActive) {
                     SHIFT_MAP[key] ?: if (isKorean) (KOR_SHIFT_MAP[key] ?: KOR_KEY_MAP[key] ?: key) 
                                       else key.uppercase(Locale.getDefault())
                 } else {
@@ -214,6 +222,7 @@ class GroqWidget : AppWidgetProvider() {
         val history = prefs.getString("history", "Let's start a new chat!") ?: ""
         val isKor = prefs.getBoolean("is_korean", false)
         val isShift = prefs.getBoolean("is_shift", false)
+        val isCaps = prefs.getBoolean("is_caps", false)
 
         val views = RemoteViews(context.packageName, R.layout.groq_widget)
         views.setTextViewText(R.id.tvInputBuffer, if (buffer.isEmpty()) "type..." else buffer)
@@ -223,17 +232,19 @@ class GroqWidget : AppWidgetProvider() {
             R.id.key_1 to "1", R.id.key_2 to "2", R.id.key_3 to "3", R.id.key_4 to "4", R.id.key_5 to "5",
             R.id.key_6 to "6", R.id.key_7 to "7", R.id.key_8 to "8", R.id.key_9 to "9", R.id.key_0 to "0",
             R.id.key_minus to "minus", R.id.key_equal to "equal", R.id.key_del to "DEL",
-            R.id.key_q to "q", R.id.key_w to "w", R.id.key_e to "e", R.id.key_r to "r", R.id.key_t to "t",
+            R.id.key_tab to "TAB", R.id.key_q to "q", R.id.key_w to "w", R.id.key_e to "e", R.id.key_r to "r", R.id.key_t to "t",
             R.id.key_y to "y", R.id.key_u to "u", R.id.key_i to "i", R.id.key_o to "o", R.id.key_p to "p",
             R.id.key_left_bracket to "left_bracket", R.id.key_right_bracket to "right_bracket", R.id.key_backslash to "backslash",
-            R.id.key_a to "a", R.id.key_s to "s", R.id.key_d to "d", R.id.key_f to "f", R.id.key_g to "g",
+            R.id.key_caps to "CAPS", R.id.key_a to "a", R.id.key_s to "s", R.id.key_d to "d", R.id.key_f to "f", R.id.key_g to "g",
             R.id.key_h to "h", R.id.key_j to "j", R.id.key_k to "k", R.id.key_l to "l",
-            R.id.key_semicolon to "semicolon", R.id.key_quote to "quote",
+            R.id.key_semicolon to "semicolon", R.id.key_quote to "quote", R.id.key_enter to "ENTER",
             R.id.key_shift to "SHIFT", R.id.key_z to "z", R.id.key_x to "x", R.id.key_c to "c", R.id.key_v to "v",
             R.id.key_b to "b", R.id.key_n to "n", R.id.key_m to "m",
-            R.id.key_comma to "comma", R.id.key_period to "period", R.id.key_slash to "slash",
+            R.id.key_comma to "comma", R.id.key_period to "period", R.id.key_slash to "slash", R.id.key_shift_r to "SHIFT",
             R.id.key_lang to "LANG", R.id.key_space to "SPACE", R.id.key_send to "SEND", R.id.key_reset to "RESET"
         )
+
+        val shiftActive = isShift || isCaps
 
         for (pair in keys) {
             val id = pair.first
@@ -244,13 +255,14 @@ class GroqWidget : AppWidgetProvider() {
             }
             views.setOnClickPendingIntent(id, PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             
-            val display = if (isShift) {
+            val display = if (shiftActive) {
                 SHIFT_MAP[key] ?: if (isKor) (KOR_SHIFT_MAP[key] ?: KOR_KEY_MAP[key] ?: key) else key.uppercase(Locale.getDefault())
             } else {
                 SYMBOL_KEY_MAP[key] ?: if (isKor) (KOR_KEY_MAP[key] ?: key) else key
             }
             
-            if (key != "SHIFT" && key != "LANG" && key != "SPACE" && key != "SEND" && key != "DEL" && key != "RESET") {
+            val functionalKeys = setOf("SHIFT", "LANG", "SPACE", "SEND", "DEL", "RESET", "TAB", "CAPS", "ENTER")
+            if (key !in functionalKeys) {
                 views.setTextViewText(id, display)
             }
         }
