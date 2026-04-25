@@ -13,7 +13,7 @@
 
 ---
 
-![testimg](testimg.png)
+![testimg](testimg.png =400x)
 
 ---
 
