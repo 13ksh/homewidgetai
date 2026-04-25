@@ -13,7 +13,8 @@
 
 ---
 
-![testimg](testimg.png =400x)
+## ✨ 테스트 이미지
+![testimg](testimg.png)
 
 ---
 
